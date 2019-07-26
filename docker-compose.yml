@@ -2,18 +2,29 @@
 version: '2.1'
 services:
   webdav:
-    container_name: ${CONTAINER_HOST_NAME:-standalone.webdav}
-    hostname: ${CONTAINER_HOST_NAME:-standalone.webdav}
-    image: ${IMAGE_PREFIX:-bytemark/}${IMAGE_NAME:-webdav}:${IMAGE_TAG:-2.4}
-    environment:
-      AUTH_TYPE: ${WEBDAV_AUTH_TYPE:-Basic}
-      USERNAME: ${WEBDAV_USERNAME:-user}
-      PASSWORD: ${WEBDAV_PASSWORD:-user_pass}
+    extends:
+      file: docker-compose-base.yml
+      service: base-webdav
+    networks:
+      local-network:
+        ipv4_address: ${IPV4_ADDRESS:-172.16.238.198}
+        #ipv6_address: ${IPV6_ADDRESS:-2001:3984:3989::198}
     ports:
       - "${EXTERNAL_WEBDAV_80_PORT:-80}:80"
     restart: always
     volumes:
       - dav:/var/lib/dav
+
+networks:
+  local-network:
+    external: true
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.238.0/24
+      #- subnet: 2001:3984:3989::/64
 
 volumes:
   dav:

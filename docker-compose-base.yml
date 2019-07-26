@@ -1,0 +1,19 @@
+
+version: '2.1'
+services:
+  base-webdav:
+    container_name: ${CONTAINER_HOST_NAME:-standalone.webdav}
+    hostname: ${CONTAINER_HOST_NAME:-standalone.webdav}
+    image: ${IMAGE_PREFIX:-bytemark/}${IMAGE_NAME:-webdav}:${IMAGE_TAG:-2.4}
+    environment:
+      AUTH_TYPE: ${WEBDAV_AUTH_TYPE:-Basic}
+      USERNAME: ${WEBDAV_USERNAME:-user}
+      PASSWORD: ${WEBDAV_PASSWORD:-user_pass}
+    labels:
+      deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
+      deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
+      deploy.config.ref: ${LABEL_DEPLOY_CONFIG_REF:-unknown}
+      deploy.util.commit: ${LABEL_DEPLOY_UTIL_COMMIT:-unknown}
+      deploy.util.ref: ${LABEL_DEPLOY_UTIL_REF:-unknown}
+      instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.webdav}
+      instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/webdav/standalone}
