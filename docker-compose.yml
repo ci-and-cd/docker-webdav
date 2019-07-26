@@ -1,5 +1,5 @@
 
-version: '3'
+version: '2.1'
 services:
   webdav:
     image: ${IMAGE_PREFIX:-bytemark/}${IMAGE_NAME:-webdav}:${IMAGE_TAG:-2.4}
